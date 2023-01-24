@@ -1,24 +1,24 @@
-fn new_stack(maxsize: usize) -> Vec<u32> {
-    let vec: Vec<u32> = Vec::with_capacity(maxsize);
+fn new_stack(maxsize: usize) -> Vec<char> {
+    let vec: Vec<char> = Vec::with_capacity(maxsize);
     vec
 }
 
-fn pop(stack: &mut Vec<u32>) -> Option<u32> {
+fn pop(stack: &mut Vec<char>) -> Option<char> {
     let popped_val = stack.pop();
-    println!("The popped value is: {:?}", popped_val);
+    // println!("The popped value is: {:?}", popped_val);
     popped_val
 }
 
-fn push(stack: &mut Vec<u32>, item: u32, maxsize: usize) {
+fn push(stack: &mut Vec<char>, item: char, maxsize: usize) {
     if stack.len() == maxsize {
-        println!("Cannot add more");
+        // println!("Cannot add more");
     } else {
         stack.push(item);
-        println!("Stack: {:?}", stack)
+        // println!("Stack: {:?}", stack)
     }
 }
 
-fn size(stack: &Vec<u32>) -> usize {
+fn size(stack: &Vec<char>) -> usize {
     stack.len()
 }
 
@@ -33,37 +33,21 @@ fn input() -> u32 {
 }
 
 fn main() {
-    println!("Let us first create a stack for our use");
-    println!("Please mention the size of the stack");
+    let input_string: String = String::from("Roma é amor");
+    let size_stack = input_string.len();
+    let mut stack = new_stack(size_stack);
 
-    let size_stack = input();
-    let mut stack: Vec<u32> = new_stack(size_stack as usize);
+    let mut rev_string = String::new();
 
-    loop {
-        println!("\n\n ****** Menu ****** \n");
-        println!("1. Push \n 2. Pop \n 3. Display \n 4. Size \n 5. Exit");
-        println!("\n Enter your choice: ");
-        let choice = input();
-
-        match choice {
-            1 => {
-                println!("Enter the value to be inserted: ");
-                let item = input();
-                push(&mut stack, item, size_stack as usize);
-            }
-
-            2 => println!("The popped element is: {:?}", pop(&mut stack)),
-            3 => println!("The elements are {:?}", stack),
-            4 => println!("The size of the stack is {}", size(&stack)),
-            _ => println!("\n Wrong selection... try again"),
-        }
-
-        println!("Do you want to continue 1 = Yes | 0 = No");
-        let status: u32 = input();
-        if status == 1 {
-            continue;
-        } else {
-            break;
-        }
+    for c in input_string.chars() {
+        push(&mut stack, c, size_stack);
     }
+
+    for _ in 0..size(&stack) {
+        let popped_char: char = pop(&mut stack).unwrap();
+        rev_string.push(popped_char);
+    }
+
+    println!("Original string: {:?}", input_string);
+    println!("Reversed string: {:?}", rev_string);
 }
